@@ -3,14 +3,14 @@
 #
 # EOF (end-of-file) token is used to indicate that
 # there is no more input left for lexical analysis
-INTEGER, PLUS, SPACE, EOF = 'INTEGER', 'PLUS', 'SPACE', 'EOF'
+INTEGER, PLUS, EOF = 'INTEGER', 'PLUS', 'EOF'
 
 
 class Token(object):
     def __init__(self, type, value):
-        # token type: INTEGER, PLUS, WHITESPACE, or EOF
+        # token type: INTEGER, PLUS, or EOF
         self.type = type
-        # token value: 0, 1, 2. 3, 4, 5, 6, 7, 8, 9, '+', ' ', or None
+        # token value: 0, 1, 2. 3, 4, 5, 6, 7, 8, 9, '+', or None
         self.value = value
 
     def __str__(self):
@@ -18,7 +18,6 @@ class Token(object):
         Examples:
             Token(INTEGER, 3)
             Token(PLUS '+')
-            Token(SPACE ' ')
         """
         return 'Token({type}, {value})'.format(
             type=self.type,
@@ -72,11 +71,6 @@ class Interpreter(object):
             self.pos += 1
             return token
 
-        if current_char == ' ':
-            token = Token(SPACE, current_char)
-            self.pos += 1
-            return token
-
         self.error()
 
     def eat(self, token_type):
@@ -98,18 +92,9 @@ class Interpreter(object):
         left = self.current_token
         self.eat(INTEGER)
 
-        # expect a space
-        space = self.current_token
-        self.eat(SPACE)
-
-
         # we expect the current token to be a '+' token
         op = self.current_token
         self.eat(PLUS)
-
-        # expect another space
-        space = self.current_token
-        self.eat(SPACE)
 
         # we expect the current token to be a single-digit integer
         right = self.current_token
