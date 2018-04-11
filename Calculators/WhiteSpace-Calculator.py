@@ -62,6 +62,7 @@ class Interpreter(object):
         # integer, create an INTEGER token, increment self.pos
         # index to point to the next character after the digit,
         # and return the INTEGER token
+
         if current_char.isdigit():
             token = Token(INTEGER, int(current_char))
             self.pos += 1
@@ -101,7 +102,6 @@ class Interpreter(object):
         # expect a space
         space = self.current_token
         self.eat(SPACE)
-
 
         # we expect the current token to be a '+' token
         op = self.current_token
